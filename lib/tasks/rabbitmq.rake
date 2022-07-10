@@ -5,7 +5,10 @@ namespace :rabbitmq do
 
     conn = Bunny.new.tap(&:start)
     ch = conn.create_channel
-    queue_restaurants = ch.queue("dashboard.restaurants")
+    queue_restaurants = ch.queue(
+      "dashboard.restaurants",
+      durable: true
+    )
     
     # bind queue to exchange
     queue_restaurants.bind("crawler.restaurants")
